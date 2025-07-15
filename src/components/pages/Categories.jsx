@@ -39,7 +39,7 @@ const Categories = () => {
       type: "pie",
       height: 350,
     },
-    labels: categories.map(cat => cat.name),
+labels: categories.map(cat => cat.Name),
     colors: ["#1e40af", "#3730a3", "#10b981", "#f59e0b", "#ef4444", "#8b5cf6"],
     legend: {
       position: "bottom",
@@ -132,8 +132,8 @@ const Categories = () => {
                     className="w-4 h-4 rounded-full"
                     style={{ backgroundColor: chartOptions.colors[index % chartOptions.colors.length] }}
                   />
-                  <div>
-                    <p className="font-medium text-gray-900">{category.name}</p>
+<div>
+                    <p className="font-medium text-gray-900">{category.Name}</p>
                     <p className="text-sm text-gray-600">
                       {category.productCount} produtos
                     </p>
@@ -166,9 +166,9 @@ const Categories = () => {
             transition={{ delay: index * 0.1 }}
           >
             <Card className="p-6 hover:shadow-premium-lg transition-all duration-200">
-              <div className="flex items-center justify-between mb-4">
+<div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-semibold text-gray-900">
-                  {category.name}
+                  {category.Name}
                 </h3>
                 <div 
                   className="w-8 h-8 rounded-lg flex items-center justify-center"

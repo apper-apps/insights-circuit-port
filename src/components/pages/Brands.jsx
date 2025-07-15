@@ -52,7 +52,7 @@ const Brands = () => {
       enabled: false,
     },
     xaxis: {
-      categories: brands.map(brand => brand.name),
+categories: brands.map(brand => brand.Name),
       labels: {
         formatter: (value) => {
           return new Intl.NumberFormat("pt-BR", {
@@ -160,8 +160,8 @@ const Brands = () => {
                     <div className="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center text-white font-bold text-sm">
                       {index + 1}
                     </div>
-                    <div>
-                      <p className="font-medium text-gray-900">{brand.name}</p>
+<div>
+                      <p className="font-medium text-gray-900">{brand.Name}</p>
                       <p className="text-sm text-gray-600">
                         {brand.productCount} produtos
                       </p>
@@ -194,13 +194,13 @@ const Brands = () => {
             transition={{ delay: index * 0.1 }}
           >
             <Card className="p-6 hover:shadow-premium-lg transition-all duration-200">
-              <div className="flex items-center justify-between mb-4">
+<div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-semibold text-gray-900">
-                  {brand.name}
+                  {brand.Name}
                 </h3>
                 <div className="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">
-                    {brand.name.charAt(0).toUpperCase()}
+<span className="text-white font-bold text-sm">
+                    {brand.Name.charAt(0).toUpperCase()}
                   </span>
                 </div>
               </div>

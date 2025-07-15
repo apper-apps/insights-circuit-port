@@ -1,66 +1,215 @@
-import categoriesData from "@/services/mockData/categories.json";
-
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-
 export const categoryService = {
   async getAll() {
-    await delay(300);
-    return [...categoriesData];
+    try {
+      const { ApperClient } = window.ApperSDK;
+      const apperClient = new ApperClient({
+        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+      });
+      
+      const params = {
+        fields: [
+          { field: { Name: "Name" } },
+          { field: { Name: "Tags" } },
+          { field: { Name: "totalCMV" } },
+          { field: { Name: "productCount" } },
+          { field: { Name: "averageMargin" } },
+          { field: { Name: "percentOfTotal" } }
+        ],
+        orderBy: [
+          { fieldName: "totalCMV", sorttype: "DESC" }
+        ]
+      };
+      
+      const response = await apperClient.fetchRecords("category", params);
+      
+      if (!response.success) {
+        throw new Error(response.message);
+      }
+      
+      return response.data || [];
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+      throw error;
+    }
   },
 
   async getById(id) {
-    await delay(200);
-    const category = categoriesData.find(c => c.Id === parseInt(id));
-    if (!category) {
-      throw new Error(`Categoria com Id ${id} não encontrada`);
+    try {
+      const { ApperClient } = window.ApperSDK;
+      const apperClient = new ApperClient({
+        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+      });
+      
+      const params = {
+        fields: [
+          { field: { Name: "Name" } },
+          { field: { Name: "Tags" } },
+          { field: { Name: "totalCMV" } },
+          { field: { Name: "productCount" } },
+          { field: { Name: "averageMargin" } },
+          { field: { Name: "percentOfTotal" } }
+        ]
+      };
+      
+      const response = await apperClient.getRecordById("category", parseInt(id), params);
+      
+      if (!response.success) {
+        throw new Error(response.message);
+      }
+      
+      return response.data;
+    } catch (error) {
+      console.error(`Error fetching category with ID ${id}:`, error);
+      throw error;
     }
-    return { ...category };
   },
 
   async getTopCategories(limit = 5) {
-    await delay(250);
-    return [...categoriesData]
-      .sort((a, b) => b.totalCMV - a.totalCMV)
-      .slice(0, limit);
+    try {
+      const { ApperClient } = window.ApperSDK;
+      const apperClient = new ApperClient({
+        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+      });
+      
+      const params = {
+        fields: [
+          { field: { Name: "Name" } },
+          { field: { Name: "totalCMV" } }
+        ],
+        orderBy: [
+          { fieldName: "totalCMV", sorttype: "DESC" }
+        ],
+        pagingInfo: {
+          limit: limit,
+          offset: 0
+        }
+      };
+      
+      const response = await apperClient.fetchRecords("category", params);
+      
+      if (!response.success) {
+        throw new Error(response.message);
+      }
+      
+      return response.data || [];
+    } catch (error) {
+      console.error("Error fetching top categories:", error);
+      throw error;
+    }
   },
 
   async create(category) {
-    await delay(300);
-    const newId = Math.max(...categoriesData.map(c => c.Id)) + 1;
-    const newCategory = {
-      ...category,
-      Id: newId
-    };
-    categoriesData.push(newCategory);
-    return { ...newCategory };
+    try {
+      const { ApperClient } = window.ApperSDK;
+      const apperClient = new ApperClient({
+        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+      });
+      
+      const params = {
+        records: [{
+          Name: category.Name,
+          Tags: category.Tags,
+          totalCMV: category.totalCMV,
+          productCount: category.productCount,
+          averageMargin: category.averageMargin,
+          percentOfTotal: category.percentOfTotal
+        }]
+      };
+      
+      const response = await apperClient.createRecord("category", params);
+      
+      if (!response.success) {
+        throw new Error(response.message);
+      }
+      
+      if (response.results) {
+        const failedRecords = response.results.filter(result => !result.success);
+        if (failedRecords.length > 0) {
+          console.error(`Failed to create ${failedRecords.length} records:${JSON.stringify(failedRecords)}`);
+          throw new Error(failedRecords[0].message);
+        }
+        return response.results[0].data;
+      }
+      
+      return null;
+    } catch (error) {
+      console.error("Error creating category:", error);
+      throw error;
+    }
   },
 
   async update(id, updates) {
-    await delay(300);
-    const index = categoriesData.findIndex(c => c.Id === parseInt(id));
-    if (index === -1) {
-      throw new Error(`Categoria com Id ${id} não encontrada`);
+    try {
+      const { ApperClient } = window.ApperSDK;
+      const apperClient = new ApperClient({
+        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+      });
+      
+      const params = {
+        records: [{
+          Id: parseInt(id),
+          ...updates
+        }]
+      };
+      
+      const response = await apperClient.updateRecord("category", params);
+      
+      if (!response.success) {
+        throw new Error(response.message);
+      }
+      
+      if (response.results) {
+        const failedRecords = response.results.filter(result => !result.success);
+        if (failedRecords.length > 0) {
+          console.error(`Failed to update ${failedRecords.length} records:${JSON.stringify(failedRecords)}`);
+          throw new Error(failedRecords[0].message);
+        }
+        return response.results[0].data;
+      }
+      
+      return null;
+    } catch (error) {
+      console.error(`Error updating category with ID ${id}:`, error);
+      throw error;
     }
-    
-    const updatedCategory = {
-      ...categoriesData[index],
-      ...updates,
-      Id: parseInt(id)
-    };
-    
-    categoriesData[index] = updatedCategory;
-    return { ...updatedCategory };
   },
 
   async delete(id) {
-    await delay(300);
-    const index = categoriesData.findIndex(c => c.Id === parseInt(id));
-    if (index === -1) {
-      throw new Error(`Categoria com Id ${id} não encontrada`);
+    try {
+      const { ApperClient } = window.ApperSDK;
+      const apperClient = new ApperClient({
+        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+      });
+      
+      const params = {
+        RecordIds: [parseInt(id)]
+      };
+      
+      const response = await apperClient.deleteRecord("category", params);
+      
+      if (!response.success) {
+        throw new Error(response.message);
+      }
+      
+      if (response.results) {
+        const failedRecords = response.results.filter(result => !result.success);
+        if (failedRecords.length > 0) {
+          console.error(`Failed to delete ${failedRecords.length} records:${JSON.stringify(failedRecords)}`);
+          throw new Error(failedRecords[0].message);
+        }
+        return response.results[0].data;
+      }
+      
+      return null;
+    } catch (error) {
+      console.error(`Error deleting category with ID ${id}:`, error);
+      throw error;
     }
-    
-    const deletedCategory = categoriesData[index];
-    categoriesData.splice(index, 1);
-    return { ...deletedCategory };
   }
 };

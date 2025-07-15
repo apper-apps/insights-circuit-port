@@ -15,10 +15,10 @@ const ProductTable = ({ data, isLoading, error, onRetry }) => {
   const sortedAndFilteredData = useMemo(() => {
     if (!data) return [];
 
-    let filtered = data.filter(product =>
-      product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.brand.toLowerCase().includes(searchTerm.toLowerCase())
+let filtered = data.filter(product =>
+      product.Name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.category?.Name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.brand?.Name?.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     filtered.sort((a, b) => {
@@ -173,17 +173,17 @@ const ProductTable = ({ data, isLoading, error, onRetry }) => {
                 transition={{ delay: index * 0.05 }}
                 className="hover:bg-gray-50 transition-colors"
               >
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="font-medium text-gray-900">{product.name}</div>
+<td className="px-6 py-4 whitespace-nowrap">
+                  <div className="font-medium text-gray-900">{product.Name}</div>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
+<td className="px-6 py-4 whitespace-nowrap">
                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                    {product.category}
+                    {product.category?.Name || 'N/A'}
                   </span>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
+<td className="px-6 py-4 whitespace-nowrap">
                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
-                    {product.brand}
+                    {product.brand?.Name || 'N/A'}
                   </span>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">

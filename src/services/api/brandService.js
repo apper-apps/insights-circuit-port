@@ -1,66 +1,215 @@
-import brandsData from "@/services/mockData/brands.json";
-
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-
 export const brandService = {
   async getAll() {
-    await delay(300);
-    return [...brandsData];
+    try {
+      const { ApperClient } = window.ApperSDK;
+      const apperClient = new ApperClient({
+        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+      });
+      
+      const params = {
+        fields: [
+          { field: { Name: "Name" } },
+          { field: { Name: "Tags" } },
+          { field: { Name: "totalCMV" } },
+          { field: { Name: "productCount" } },
+          { field: { Name: "averageMargin" } },
+          { field: { Name: "percentOfTotal" } }
+        ],
+        orderBy: [
+          { fieldName: "totalCMV", sorttype: "DESC" }
+        ]
+      };
+      
+      const response = await apperClient.fetchRecords("brand", params);
+      
+      if (!response.success) {
+        throw new Error(response.message);
+      }
+      
+      return response.data || [];
+    } catch (error) {
+      console.error("Error fetching brands:", error);
+      throw error;
+    }
   },
 
   async getById(id) {
-    await delay(200);
-    const brand = brandsData.find(b => b.Id === parseInt(id));
-    if (!brand) {
-      throw new Error(`Marca com Id ${id} não encontrada`);
+    try {
+      const { ApperClient } = window.ApperSDK;
+      const apperClient = new ApperClient({
+        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+      });
+      
+      const params = {
+        fields: [
+          { field: { Name: "Name" } },
+          { field: { Name: "Tags" } },
+          { field: { Name: "totalCMV" } },
+          { field: { Name: "productCount" } },
+          { field: { Name: "averageMargin" } },
+          { field: { Name: "percentOfTotal" } }
+        ]
+      };
+      
+      const response = await apperClient.getRecordById("brand", parseInt(id), params);
+      
+      if (!response.success) {
+        throw new Error(response.message);
+      }
+      
+      return response.data;
+    } catch (error) {
+      console.error(`Error fetching brand with ID ${id}:`, error);
+      throw error;
     }
-    return { ...brand };
   },
 
   async getTopBrands(limit = 5) {
-    await delay(250);
-    return [...brandsData]
-      .sort((a, b) => b.totalCMV - a.totalCMV)
-      .slice(0, limit);
+    try {
+      const { ApperClient } = window.ApperSDK;
+      const apperClient = new ApperClient({
+        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+      });
+      
+      const params = {
+        fields: [
+          { field: { Name: "Name" } },
+          { field: { Name: "totalCMV" } }
+        ],
+        orderBy: [
+          { fieldName: "totalCMV", sorttype: "DESC" }
+        ],
+        pagingInfo: {
+          limit: limit,
+          offset: 0
+        }
+      };
+      
+      const response = await apperClient.fetchRecords("brand", params);
+      
+      if (!response.success) {
+        throw new Error(response.message);
+      }
+      
+      return response.data || [];
+    } catch (error) {
+      console.error("Error fetching top brands:", error);
+      throw error;
+    }
   },
 
   async create(brand) {
-    await delay(300);
-    const newId = Math.max(...brandsData.map(b => b.Id)) + 1;
-    const newBrand = {
-      ...brand,
-      Id: newId
-    };
-    brandsData.push(newBrand);
-    return { ...newBrand };
+    try {
+      const { ApperClient } = window.ApperSDK;
+      const apperClient = new ApperClient({
+        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+      });
+      
+      const params = {
+        records: [{
+          Name: brand.Name,
+          Tags: brand.Tags,
+          totalCMV: brand.totalCMV,
+          productCount: brand.productCount,
+          averageMargin: brand.averageMargin,
+          percentOfTotal: brand.percentOfTotal
+        }]
+      };
+      
+      const response = await apperClient.createRecord("brand", params);
+      
+      if (!response.success) {
+        throw new Error(response.message);
+      }
+      
+      if (response.results) {
+        const failedRecords = response.results.filter(result => !result.success);
+        if (failedRecords.length > 0) {
+          console.error(`Failed to create ${failedRecords.length} records:${JSON.stringify(failedRecords)}`);
+          throw new Error(failedRecords[0].message);
+        }
+        return response.results[0].data;
+      }
+      
+      return null;
+    } catch (error) {
+      console.error("Error creating brand:", error);
+      throw error;
+    }
   },
 
   async update(id, updates) {
-    await delay(300);
-    const index = brandsData.findIndex(b => b.Id === parseInt(id));
-    if (index === -1) {
-      throw new Error(`Marca com Id ${id} não encontrada`);
+    try {
+      const { ApperClient } = window.ApperSDK;
+      const apperClient = new ApperClient({
+        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+      });
+      
+      const params = {
+        records: [{
+          Id: parseInt(id),
+          ...updates
+        }]
+      };
+      
+      const response = await apperClient.updateRecord("brand", params);
+      
+      if (!response.success) {
+        throw new Error(response.message);
+      }
+      
+      if (response.results) {
+        const failedRecords = response.results.filter(result => !result.success);
+        if (failedRecords.length > 0) {
+          console.error(`Failed to update ${failedRecords.length} records:${JSON.stringify(failedRecords)}`);
+          throw new Error(failedRecords[0].message);
+        }
+        return response.results[0].data;
+      }
+      
+      return null;
+    } catch (error) {
+      console.error(`Error updating brand with ID ${id}:`, error);
+      throw error;
     }
-    
-    const updatedBrand = {
-      ...brandsData[index],
-      ...updates,
-      Id: parseInt(id)
-    };
-    
-    brandsData[index] = updatedBrand;
-    return { ...updatedBrand };
   },
 
   async delete(id) {
-    await delay(300);
-    const index = brandsData.findIndex(b => b.Id === parseInt(id));
-    if (index === -1) {
-      throw new Error(`Marca com Id ${id} não encontrada`);
+    try {
+      const { ApperClient } = window.ApperSDK;
+      const apperClient = new ApperClient({
+        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+      });
+      
+      const params = {
+        RecordIds: [parseInt(id)]
+      };
+      
+      const response = await apperClient.deleteRecord("brand", params);
+      
+      if (!response.success) {
+        throw new Error(response.message);
+      }
+      
+      if (response.results) {
+        const failedRecords = response.results.filter(result => !result.success);
+        if (failedRecords.length > 0) {
+          console.error(`Failed to delete ${failedRecords.length} records:${JSON.stringify(failedRecords)}`);
+          throw new Error(failedRecords[0].message);
+        }
+        return response.results[0].data;
+      }
+      
+      return null;
+    } catch (error) {
+      console.error(`Error deleting brand with ID ${id}:`, error);
+      throw error;
     }
-    
-    const deletedBrand = brandsData[index];
-    brandsData.splice(index, 1);
-    return { ...deletedBrand };
   }
 };

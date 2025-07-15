@@ -25,9 +25,9 @@ const Products = () => {
 
       setProducts(productsData);
       
-      // Preparar dados para o gráfico de top produtos
+// Preparar dados para o gráfico de top produtos
       const chartDataFormatted = topProducts.map(product => ({
-        label: product.name,
+        label: product.Name,
         value: product.totalCMV
       }));
       

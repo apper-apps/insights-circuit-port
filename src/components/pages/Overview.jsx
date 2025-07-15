@@ -64,7 +64,7 @@ const Overview = () => {
 
       {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <KPICard
+<KPICard
           title="CMV Total"
           value={metrics?.totalCMV || 0}
           change="+12.5%"
