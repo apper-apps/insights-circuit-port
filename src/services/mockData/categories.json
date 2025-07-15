@@ -1,0 +1,50 @@
+[
+  {
+    "Id": 1,
+    "name": "Eletrônicos",
+    "totalCMV": 447600.00,
+    "productCount": 5,
+    "averageMargin": 0.272,
+    "percentOfTotal": 65.8
+  },
+  {
+    "Id": 2,
+    "name": "Calçados",
+    "totalCMV": 47800.00,
+    "productCount": 3,
+    "averageMargin": 0.333,
+    "percentOfTotal": 7.0
+  },
+  {
+    "Id": 3,
+    "name": "Roupas",
+    "totalCMV": 25960.00,
+    "productCount": 3,
+    "averageMargin": 0.355,
+    "percentOfTotal": 3.8
+  },
+  {
+    "Id": 4,
+    "name": "Acessórios",
+    "totalCMV": 125000.00,
+    "productCount": 2,
+    "averageMargin": 0.321,
+    "percentOfTotal": 18.4
+  },
+  {
+    "Id": 5,
+    "name": "Móveis",
+    "totalCMV": 12000.00,
+    "productCount": 1,
+    "averageMargin": 0.333,
+    "percentOfTotal": 1.8
+  },
+  {
+    "Id": 6,
+    "name": "Beleza",
+    "totalCMV": 10640.00,
+    "productCount": 1,
+    "averageMargin": 0.345,
+    "percentOfTotal": 1.6
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "totalCMV": 680000.00,
+  "totalRevenue": 924000.00,
+  "averageMargin": 0.318,
+  "productCount": 15,
+  "lastSync": "2024-01-15T10:30:00Z",
+  "period": {
+    "start": "2024-01-01T00:00:00Z",
+    "end": "2024-01-31T23:59:59Z",
+    "type": "month"
+  }
+}

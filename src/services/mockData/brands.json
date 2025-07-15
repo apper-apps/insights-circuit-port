@@ -1,0 +1,114 @@
+[
+  {
+    "Id": 1,
+    "name": "Apple",
+    "totalCMV": 240000.00,
+    "productCount": 2,
+    "averageMargin": 0.281,
+    "percentOfTotal": 35.3
+  },
+  {
+    "Id": 2,
+    "name": "Samsung",
+    "totalCMV": 89600.00,
+    "productCount": 1,
+    "averageMargin": 0.263,
+    "percentOfTotal": 13.2
+  },
+  {
+    "Id": 3,
+    "name": "Rolex",
+    "totalCMV": 105000.00,
+    "productCount": 1,
+    "averageMargin": 0.300,
+    "percentOfTotal": 15.4
+  },
+  {
+    "Id": 4,
+    "name": "Nike",
+    "totalCMV": 21840.00,
+    "productCount": 1,
+    "averageMargin": 0.333,
+    "percentOfTotal": 3.2
+  },
+  {
+    "Id": 5,
+    "name": "Adidas",
+    "totalCMV": 17920.00,
+    "productCount": 1,
+    "averageMargin": 0.333,
+    "percentOfTotal": 2.6
+  },
+  {
+    "Id": 6,
+    "name": "LG",
+    "totalCMV": 63000.00,
+    "productCount": 1,
+    "averageMargin": 0.271,
+    "percentOfTotal": 9.3
+  },
+  {
+    "Id": 7,
+    "name": "Dell",
+    "totalCMV": 55000.00,
+    "productCount": 1,
+    "averageMargin": 0.267,
+    "percentOfTotal": 8.1
+  },
+  {
+    "Id": 8,
+    "name": "Ralph Lauren",
+    "totalCMV": 11400.00,
+    "productCount": 1,
+    "averageMargin": 0.333,
+    "percentOfTotal": 1.7
+  },
+  {
+    "Id": 9,
+    "name": "Levis",
+    "totalCMV": 7560.00,
+    "productCount": 1,
+    "averageMargin": 0.357,
+    "percentOfTotal": 1.1
+  },
+  {
+    "Id": 10,
+    "name": "Louis Vuitton",
+    "totalCMV": 20000.00,
+    "productCount": 1,
+    "averageMargin": 0.342,
+    "percentOfTotal": 2.9
+  },
+  {
+    "Id": 11,
+    "name": "Chanel",
+    "totalCMV": 10640.00,
+    "productCount": 1,
+    "averageMargin": 0.345,
+    "percentOfTotal": 1.6
+  },
+  {
+    "Id": 12,
+    "name": "Converse",
+    "totalCMV": 8040.00,
+    "productCount": 1,
+    "averageMargin": 0.333,
+    "percentOfTotal": 1.2
+  },
+  {
+    "Id": 13,
+    "name": "DXRacer",
+    "totalCMV": 12000.00,
+    "productCount": 1,
+    "averageMargin": 0.333,
+    "percentOfTotal": 1.8
+  },
+  {
+    "Id": 14,
+    "name": "Hugo Boss",
+    "totalCMV": 7000.00,
+    "productCount": 1,
+    "averageMargin": 0.375,
+    "percentOfTotal": 1.0
+  }
+]
